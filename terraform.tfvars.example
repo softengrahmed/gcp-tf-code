@@ -1,0 +1,63 @@
+# Example Terraform Variables Configuration
+# Copy this file to terraform.tfvars and update the values according to your needs
+
+# Project Configuration (REQUIRED)
+project_id = "your-gcp-project-id"
+
+# Location Configuration
+region = "us-central1"
+zone   = "us-central1-a"
+
+# Environment Configuration
+environment = "dev"  # Options: dev, staging, prod
+
+# Network Configuration
+subnet_cidr = "10.0.1.0/24"
+
+# Source IP ranges allowed to access the webserver
+# For production, restrict this to specific IP ranges for security
+allowed_source_ranges = [
+  "0.0.0.0/0"  # Allow from anywhere (NOT recommended for production)
+  # "203.0.113.0/24",    # Example: Allow from specific office network
+  # "198.51.100.0/24"    # Example: Allow from another specific network
+]
+
+# VM Configuration
+machine_type = "e2-micro"  # Options: e2-micro, e2-small, e2-medium, e2-standard-2, etc.
+vm_image     = "ubuntu-os-cloud/ubuntu-2004-lts"  # Ubuntu 20.04 LTS
+disk_size    = 20  # GB
+
+# SSH Configuration
+ssh_user = "ubuntu"
+# ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ... your-ssh-public-key"
+
+# Optional Features
+use_static_ip      = false  # Set to true if you need a static IP
+enable_logging     = true   # Enable VPC flow logs and firewall logs
+enable_monitoring  = true   # Enable monitoring for the VM
+
+# Additional Tags (optional)
+additional_tags = [
+  "webserver",
+  "terraform-managed"
+]
+
+# Example configurations for different environments:
+
+# Development Environment
+# machine_type = "e2-micro"
+# disk_size = 20
+# use_static_ip = false
+# allowed_source_ranges = ["0.0.0.0/0"]
+
+# Staging Environment
+# machine_type = "e2-small"
+# disk_size = 30
+# use_static_ip = true
+# allowed_source_ranges = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
+
+# Production Environment
+# machine_type = "e2-standard-2"
+# disk_size = 50
+# use_static_ip = true
+# allowed_source_ranges = ["203.0.113.0/24"]  # Specific office network only
